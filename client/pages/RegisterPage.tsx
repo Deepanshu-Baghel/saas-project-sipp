@@ -22,11 +22,13 @@ import { AuthService } from "@/lib/auth";
 interface RegisterPageProps {
   onBackToLanding: () => void;
   onRegisterSuccess: (role: "student" | "teacher" | "principal") => void;
+  onLogin: () => void;
 }
 
 export default function RegisterPage({
   onBackToLanding,
   onRegisterSuccess,
+  onLogin,
 }: RegisterPageProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -334,7 +336,7 @@ export default function RegisterPage({
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
                 Already have an account?{" "}
-                <Button variant="link" className="text-blue-600 p-0">
+                <Button variant="link" className="text-blue-600 p-0" onClick={onLogin}>
                   Sign in here
                 </Button>
               </p>

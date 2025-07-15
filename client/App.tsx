@@ -25,7 +25,7 @@ const queryClient = new QueryClient();
 
 function DashboardLayout() {
   const [currentView, setCurrentView] = useState<
-    "landing" | "login" | "register" | "dashboard" | "forgotPassword"
+    "landing" | "login" | "register" | "dashboard" | "forgotPassword" | "termsOfService" | "privacyPolicy"
   >("landing");
   const [userRole, setUserRole] = useState<"student" | "teacher" | "principal" | null>(null);
   const [currentPage, setCurrentPage] = useState("dashboard");
@@ -58,6 +58,14 @@ function DashboardLayout() {
     setCurrentPage("dashboard");
   };
 
+  const handleShowTermsOfService = () => {
+    setCurrentView("termsOfService");
+  };
+
+  const handleShowPrivacyPolicy = () => {
+    setCurrentView("privacyPolicy");
+  };
+
   const handleLogout = () => {
     setUserRole(null);
     setCurrentPage("dashboard");
@@ -74,6 +82,7 @@ function DashboardLayout() {
         onBackToLanding={handleBackToLanding}
         onLoginSuccess={handleLoginSuccess}
         onForgotPassword={handleForgotPassword}
+        onRegister={handleRegister}
       />
     );
   }
@@ -83,12 +92,23 @@ function DashboardLayout() {
       <RegisterPage
         onBackToLanding={handleBackToLanding}
         onRegisterSuccess={handleRegisterSuccess}
+        onLogin={handleLogin}
+        onTermsOfService={handleShowTermsOfService}
+        onPrivacyPolicy={handleShowPrivacyPolicy}
       />
     );
   }
 
   if (currentView === "forgotPassword") {
     return <ForgotPasswordPage onBackToLogin={handleBackToLanding} />;
+  }
+
+  if (currentView === "termsOfService") {
+    return <TermsOfServicePage onBack={handleBackToLanding} />;
+  }
+
+  if (currentView === "privacyPolicy") {
+    return <PrivacyPolicyPage onBack={handleBackToLanding} />;
   }
 
   const renderDashboardContent = () => {

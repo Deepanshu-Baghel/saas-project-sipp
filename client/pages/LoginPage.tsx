@@ -16,12 +16,14 @@ interface LoginPageProps {
   onBackToLanding: () => void;
   onLoginSuccess: (role: "student" | "teacher" | "principal") => void;
   onForgotPassword: () => void;
+  onRegister: () => void;
 }
 
 export default function LoginPage({
   onBackToLanding,
   onLoginSuccess,
   onForgotPassword,
+  onRegister,
 }: LoginPageProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -187,12 +189,12 @@ export default function LoginPage({
               </Button>
             </form>
             <div className="mt-6 text-center">
-              <p className="text-sm text-gray-600">
-                Don't have an account?{" "}
-                <Button variant="link" className="text-blue-600 p-0">
-                  Register here
-                </Button>
-              </p>
+                <p className="text-sm text-gray-600">
+                  Don't have an account?{" "}
+                  <Button variant="link" className="text-blue-600 p-0" onClick={onRegister}>
+                    Register here
+                  </Button>
+                </p>
             </div>
           </CardContent>
         </Card>
