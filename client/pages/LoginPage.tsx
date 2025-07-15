@@ -15,11 +15,13 @@ import { AuthService } from "@/lib/auth";
 interface LoginPageProps {
   onBackToLanding: () => void;
   onLoginSuccess: (role: "student" | "teacher" | "principal") => void;
+  onForgotPassword: () => void;
 }
 
 export default function LoginPage({
   onBackToLanding,
   onLoginSuccess,
+  onForgotPassword,
 }: LoginPageProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -158,7 +160,11 @@ export default function LoginPage({
                     Remember me
                   </Label>
                 </div>
-                <Button variant="link" className="text-sm text-blue-600 p-0">
+                <Button
+                  variant="link"
+                  className="text-sm text-blue-600 p-0"
+                  onClick={onForgotPassword}
+                >
                   Forgot password?
                 </Button>
               </div>
@@ -187,28 +193,6 @@ export default function LoginPage({
                   Register here
                 </Button>
               </p>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Demo Credentials */}
-        <Card className="mt-4 bg-green-50 border-green-200">
-          <CardContent className="p-4">
-            <div className="text-center">
-              <p className="text-sm text-green-800 font-medium mb-2">
-                Demo Credentials:
-              </p>
-              <div className="text-xs text-green-700 space-y-1">
-                <p>
-                  <strong>Student:</strong> student@demo.com / password123
-                </p>
-                <p>
-                  <strong>Teacher:</strong> teacher@demo.com / password123
-                </p>
-                <p>
-                  <strong>Principal:</strong> principal@demo.com / password123
-                </p>
-              </div>
             </div>
           </CardContent>
         </Card>

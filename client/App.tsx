@@ -7,7 +7,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState } from "react";
-import RoleSelector, { UserRole } from "@/components/RoleSelector";
 import Sidebar from "@/components/Sidebar";
 import LandingPage from "@/pages/LandingPage";
 import LoginPage from "@/pages/LoginPage";
@@ -20,14 +19,15 @@ import FeesPortalPage from "@/pages/FeesPortalPage";
 import AssignTeacherPage from "@/pages/AssignTeacherPage";
 import AnalyticsPage from "@/pages/AnalyticsPage";
 import NotFound from "./pages/NotFound";
+import ForgotPasswordPage from "@/pages/ForgotPasswordPage";
 
 const queryClient = new QueryClient();
 
 function DashboardLayout() {
   const [currentView, setCurrentView] = useState<
-    "landing" | "login" | "register" | "roleSelector" | "dashboard"
+    "landing" | "login" | "register" | "dashboard" | "forgotPassword"
   >("landing");
-  const [userRole, setUserRole] = useState<UserRole | null>(null);
+  const [userRole, setUserRole] = useState<"student" | "teacher" | "principal" | null>(null);
   const [currentPage, setCurrentPage] = useState("dashboard");
 
   const handleLogin = () => {
@@ -38,18 +38,18 @@ function DashboardLayout() {
     setCurrentView("register");
   };
 
-  const handleLoginSuccess = () => {
-    setCurrentView("roleSelector");
+  const handleForgotPassword = () => {
+    setCurrentView("forgotPassword");
   };
 
-  const handleRegisterSuccess = () => {
-    setCurrentView("roleSelector");
-  };
-
-  const handleRoleSelect = (role: UserRole) => {
+  const handleLoginSuccess = (role: "student" | "teacher" | "principal") => {
     setUserRole(role);
     setCurrentPage("dashboard");
     setCurrentView("dashboard");
+  };
+
+  const handleRegisterSuccess = () => {
+    setCurrentView("login");
   };
 
   const handleBackToLanding = () => {
@@ -61,7 +61,7 @@ function DashboardLayout() {
   const handleLogout = () => {
     setUserRole(null);
     setCurrentPage("dashboard");
-    setCurrentView("roleSelector");
+    setCurrentView("landing");
   };
 
   if (currentView === "landing") {
@@ -73,6 +73,7 @@ function DashboardLayout() {
       <LoginPage
         onBackToLanding={handleBackToLanding}
         onLoginSuccess={handleLoginSuccess}
+        onForgotPassword={handleForgotPassword}
       />
     );
   }
@@ -86,13 +87,8 @@ function DashboardLayout() {
     );
   }
 
-  if (currentView === "roleSelector") {
-    return (
-      <RoleSelector
-        onRoleSelect={handleRoleSelect}
-        onBackToLanding={handleBackToLanding}
-      />
-    );
+  if (currentView === "forgotPassword") {
+    return <ForgotPasswordPage onBackToLogin={handleBackToLanding} />;
   }
 
   const renderDashboardContent = () => {
